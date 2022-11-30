@@ -33,7 +33,7 @@ line([-0.5, 0.5], [0,0], 'LineWidth', 2, 'Color', 'r');
 
 Eb = (d_min/2)^2 / log2(M) / (sin(pi/M))^2;
 for N0 = [Eb/1, Eb/10,  Eb/100]
-    n = normrnd(0 , N0, [bit_length/log2(M), 2]);
+    n = normrnd(0 , N0/2, [bit_length/log2(M), 2]);
     r = u + n;
     figure;
     h = histogram2(r(:,1), r(:,2), 100);
@@ -396,7 +396,6 @@ function decoded_data = conv_dec(binary_data, impulse_response)
     [postStates,Outputs] = build_FSM(impulse_response);
     
     if mod(length(binary_data), n)~=0
-       fprintf("Warning: The length of the binary data should be multiples of %d. 0's are padded at the end.\n", n);
        binary_data(end+1: ceil(length(binary_data)/n)*n) = 0;
     end
 
